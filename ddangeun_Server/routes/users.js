@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/productList', async (req, res) => {
   try {
-    const query = 'SELECT productName, createdAt, price, likeNum, commentNum FROM PRODUCT_TB;'
+    const query = 'SELECT PRODUCT_TB.*, USER_TB.local FROM PRODUCT_TB INNER JOIN USER_TB ON PRODUCT_TB.user_idx = USER_TB.idx;'
     const data = await pool.queryParam(query);
     console.log(data);
 
