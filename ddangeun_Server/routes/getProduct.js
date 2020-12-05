@@ -1,9 +1,8 @@
 const express = require('express');
-const malaController = require('../controllers/malaController')
+const getProductController = require('../controllers/getProductController')
 const router = express.Router();
 
-router.post('/malaStamp', malaController.createPost);
-router.get('/', malaController.getMala);
 
+router.get('/', getProductController.getProductDetail);
 
 module.exports = router;
