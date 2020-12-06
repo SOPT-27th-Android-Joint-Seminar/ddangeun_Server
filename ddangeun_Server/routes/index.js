@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.use('/users', require('./users'));
+router.use('/productList', require('./productList'));
 router.use('/getProduct', require('./getProduct'))
 
 
