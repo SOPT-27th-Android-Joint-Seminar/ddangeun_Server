@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
 const pool = require('../modules/pool');
+const { success } = require('../utils/util');
+const util = require('../utils/util');
 
 
 router.get('/', async (req, res) => {
   try {
-    const query = 'SELECT PRODUCT_TB.*, USER_TB.local FROM PRODUCT_TB INNER JOIN USER_TB ON PRODUCT_TB.user_idx = USER_TB.idx;'
+    const query = 'SELECT PRODUCT_TB.productName, PRODUCT_TB.idx, PRODUCT_TB.price, PRODUCT_TB.likeNum, PRODUCT_TB.commentNum, PRODUCT_TB.createdAt, USER_TB.local FROM PRODUCT_TB INNER JOIN USER_TB ON PRODUCT_TB.user_idx = USER_TB.idx;'
     const data = await pool.queryParam(query);
 
     const dataWithImg = await Promise.all(data.map(async product => {
@@ -20,12 +22,12 @@ router.get('/', async (req, res) => {
 
     return res
       .status(200)
-      .send(dataWithImg);
+      .send(util.success(200, '상품 리스트 조회 완료', dataWithImg));
   } catch (err) {
     console.log('productList error: ', err);
     res
       .status(500)
-      .send({status: 500});
+      .send(util.success(500, '상품 리스트 조회 오류'));
   }
 });
 
