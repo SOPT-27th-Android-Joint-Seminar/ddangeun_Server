@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const pool = require('../modules/pool');
-const { success } = require('../utils/util');
 const util = require('../utils/util');
 
 
@@ -27,7 +26,7 @@ router.get('/', async (req, res) => {
     console.log('productList error: ', err);
     res
       .status(500)
-      .send(util.success(500, '상품 리스트 조회 오류'));
+      .send(util.fail(500, '상품 리스트 조회 오류'));
   }
 });
 
