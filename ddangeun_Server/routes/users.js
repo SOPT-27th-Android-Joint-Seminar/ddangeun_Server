@@ -11,11 +11,25 @@ router.get('/productList', async (req, res) => {
   try {
     const query = 'SELECT PRODUCT_TB.*, USER_TB.local FROM PRODUCT_TB INNER JOIN USER_TB ON PRODUCT_TB.user_idx = USER_TB.idx;'
     const data = await pool.queryParam(query);
-    console.log(data);
+
+    const dataWithImgPromises = data.map(async product => {
+      const images = await pool.queryParam(`SELECT * FROM PRODUCT_IMG_TB WHERE product_idx=${product.idx};`);
+      if(images.length === 0){
+        return product;
+      }else{
+        product.imgLink = images[0].imgLink;
+        return product;
+      }
+    })
+
+    const dataWithImg = [];
+    for(let i = 0; i < dataWithImgPromises.length ; i++){
+      dataWithImg.push(await dataWithImgPromises[i]);
+    }
 
     return res
       .status(200)
-      .send(data);
+      .send(dataWithImg);
   } catch (err) {
     console.log('productList error: ', err);
     res
