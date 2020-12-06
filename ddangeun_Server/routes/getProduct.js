@@ -4,5 +4,6 @@ const router = express.Router();
 
 
 router.get('/', getProductController.getProductDetail);
+router.get('/image', getProductController.getProductImage);
 
 module.exports = router;

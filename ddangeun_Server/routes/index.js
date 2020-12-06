@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.use('/productList', require('./productList'));
-router.use('/getProduct', require('./getProduct'))
+router.use('/product', require('./getProduct'))
 
 
 module.exports = router;

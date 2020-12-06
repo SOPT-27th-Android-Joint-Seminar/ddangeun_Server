@@ -19,5 +19,14 @@ module.exports = {
       console.log('getProductDetail error : ', error);
       throw error;
     }
+  },
+    getProductImage: async(idx) => {
+      const query = `SELECT * FROM ${product_img_tb} WHERE product_idx = ${idx}`;
+      try {
+        return await pool.queryParam(query);
+      } catch (error) {
+        console.log('getProductImage error : ', error);
+        throw error;
+      }
     }
 }
